@@ -10,10 +10,10 @@ def wait_for(condition):
     while not safe_condition():
         sleep(1)
 
+
 def wait_get(getter):
     while True:
         try:
             return getter()
         except:
             sleep(1)
-

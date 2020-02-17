@@ -1,12 +1,21 @@
 import json
-
+import os
+ 
 class Memo:
     def __init__(self):
+        folder = os.path.dirname(os.path.abspath(__file__))
+
         self.memo = {}
-        self.file_name = 'url_memo.json'
+        self.file_name = folder + '/url_memo.json'
         self.load_memo()
-        with open('url_memo_backup.json', 'w') as file:
-            json.dump(self.memo, file, indent=4, sort_keys=True)
+        try:
+            with open(folder + '/url_memo_backup.json', 'w') as file:
+                json.dump(self.memo, file, indent=4, sort_keys=True)
+        except:
+            pass
+    
+    def getURLs(self):
+        return self.memo.keys()
 
     def load_memo(self):
         try:
