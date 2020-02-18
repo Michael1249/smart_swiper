@@ -48,7 +48,7 @@ class TinderBot():
     def like(self):
         def _like():
             for url in self.getCurrentFaceURLs():
-                memo.add_urls({url: None})
+                memo.upd_urls({url: None})
 
             like_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[3]')
             like_btn.click()

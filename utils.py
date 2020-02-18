@@ -17,3 +17,6 @@ def wait_get(getter):
             return getter()
         except:
             sleep(1)
+
+def convertUrlToName(imgurl):
+    return imgurl.split('.com/')[-1].replace('/', '_')

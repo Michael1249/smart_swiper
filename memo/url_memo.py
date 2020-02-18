@@ -15,7 +15,10 @@ class Memo:
             pass
     
     def getURLs(self):
-        return self.memo.keys()
+        return list(self.memo.keys())
+    
+    def getUrlData(self, url):
+        return self.memo[url]
 
     def load_memo(self):
         try:
@@ -25,7 +28,7 @@ class Memo:
         except:
             pass
 
-    def add_urls(self, urls):
+    def upd_urls(self, urls):
         for key in urls:
             if not urls[key]:
                 if key in self.memo:

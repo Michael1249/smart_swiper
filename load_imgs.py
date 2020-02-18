@@ -2,6 +2,7 @@ import datetime
 from memo.url_memo import memo
 import os
 import urllib.request
+import utils
 
 
 def readURL(url):
@@ -10,7 +11,7 @@ def readURL(url):
 
 
 def downloadimg(imgurl, folder):
-    imgfilename = imgurl.split('.com/')[-1].replace('/', '_')
+    imgfilename = utils.convertUrlToName(imgurl)
 
     full_path = folder + '/' + imgfilename
     if not os.path.isfile(full_path):
@@ -20,6 +21,14 @@ def downloadimg(imgurl, folder):
     else:
         print('skip img:', imgfilename)
 
+def main():
+    folder = os.path.dirname(os.path.abspath(__file__)) + '/images'
 
-for url in memo.getURLs():
-    downloadimg(url, os.path.dirname(os.path.abspath(__file__)) + '/images')
+    if not os.path.isdir(folder):
+       os.mkdir(folder) 
+
+    for url in memo.getURLs():
+        downloadimg(url, folder)
+
+if __name__ == '__main__':
+    main()

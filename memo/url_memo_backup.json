@@ -1,6 +1,10 @@
 {
-    "https://images-ssl.gotinder.com/0001unknown/640x640_pct_0_0_100_100_unknown.jpg": null,
-    "https://images-ssl.gotinder.com/59d3ed3a19606eb15cdcc4bc/640x640_361cb6dd-9a32-43fa-a3eb-dfb98ffd8966.jpg": null,
+    "https://images-ssl.gotinder.com/0001unknown/640x640_pct_0_0_100_100_unknown.jpg": {
+        "mark": "dislike"
+    },
+    "https://images-ssl.gotinder.com/59d3ed3a19606eb15cdcc4bc/640x640_361cb6dd-9a32-43fa-a3eb-dfb98ffd8966.jpg": {
+        "mark": "dislike"
+    },
     "https://images-ssl.gotinder.com/59d3ed3a19606eb15cdcc4bc/640x640_84ed8dc8-fd12-4d1d-b922-401ddaa2135b.jpg": null,
     "https://images-ssl.gotinder.com/59d3ed3a19606eb15cdcc4bc/640x640_a5215a41-b1ae-4931-8c30-87ee372478cd.jpg": null,
     "https://images-ssl.gotinder.com/59d3ed3a19606eb15cdcc4bc/640x640_ac48b2a8-0886-4506-be05-1a5486501155.jpg": null,
