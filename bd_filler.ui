@@ -6,21 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>384</width>
-    <height>297</height>
+    <width>397</width>
+    <height>622</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>DataBase Filler</string>
   </property>
   <widget class="QWidget" name="root">
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>250</y>
-      <width>381</width>
-      <height>44</height>
+      <y>270</y>
+      <width>397</width>
+      <height>351</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="bottom">
@@ -30,41 +30,41 @@
      <property name="leftMargin">
       <number>0</number>
      </property>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="forward">
-       <property name="text">
-        <string>FORWARD</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
+     <item row="3" column="3">
       <widget class="QPushButton" name="dislike">
        <property name="text">
         <string>DISLIKE</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="3">
+     <item row="3" column="2">
+      <widget class="QPushButton" name="forward">
+       <property name="text">
+        <string>FORWARD</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" colspan="4">
+      <widget class="QTextEdit" name="status"/>
+     </item>
+     <item row="3" column="4">
       <widget class="QPushButton" name="like">
        <property name="text">
         <string>LIKE</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="3" column="1">
       <widget class="QPushButton" name="back">
        <property name="text">
         <string>BACK</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0" colspan="4">
-      <widget class="QLabel" name="status">
+     <item row="2" column="1" colspan="4">
+      <widget class="QPushButton" name="save_current">
        <property name="text">
-        <string>undefined</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <string>SAVE CURRENT</string>
        </property>
       </widget>
      </item>
@@ -76,7 +76,7 @@
       <x>0</x>
       <y>0</y>
       <width>382</width>
-      <height>251</height>
+      <height>271</height>
      </rect>
     </property>
    </widget>
