@@ -50,8 +50,10 @@ class Controller:
         return memo.getUrlData(self.getCurrentUrl())
 
     def updateCurrent(self, data):
+        new_data = self.getCurrentData()
+        new_data.update(data)
         memo.upd_urls(
-            {self.getCurrentUrl(): self.getCurrentData().update(data)})
+            {self.getCurrentUrl(): new_data})
 
     def setCurrent(self, data):
         memo.upd_urls({self.getCurrentUrl(): data})
@@ -99,7 +101,7 @@ class Controller:
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    path_ui = os.path.join(os.path.dirname(__file__), "bd_filler.ui")
+    path_ui = os.path.join(os.path.dirname(__file__), "fill_bd.ui")
     window = uic.loadUi(path_ui)
     Controller(window)
     window.show()

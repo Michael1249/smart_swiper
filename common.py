@@ -1,0 +1,4 @@
+defaultUrlData = {
+    'mark': 'undefined',
+    'encoding': []
+}

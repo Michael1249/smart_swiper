@@ -1,4 +1,5 @@
 from time import sleep
+import datetime
 
 def wait_for(condition):
     def safe_condition():
@@ -20,3 +21,6 @@ def wait_get(getter):
 
 def convertUrlToName(imgurl):
     return imgurl.split('.com/')[-1].replace('/', '_')
+
+def timeshtamp():
+    return datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")

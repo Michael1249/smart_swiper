@@ -1,6 +1,9 @@
 import json
 import os
- 
+from datetime import date
+from utils import timeshtamp
+
+
 class Memo:
     def __init__(self):
         folder = os.path.dirname(os.path.abspath(__file__))
@@ -8,8 +11,11 @@ class Memo:
         self.memo = {}
         self.file_name = folder + '/url_memo.json'
         self.load_memo()
+
+        if not os.path.isdir(folder + '/backup/'):
+            os.mkdir(folder + '/backup/') 
         try:
-            with open(folder + '/url_memo_backup.json', 'w') as file:
+            with open(folder + '/backup/' + timeshtamp() + '_url_memo_backup.json', 'w') as file:
                 json.dump(self.memo, file, indent=4, sort_keys=True)
         except:
             pass
@@ -28,15 +34,35 @@ class Memo:
         except:
             pass
 
-    def upd_urls(self, urls):
-        for key in urls:
-            if not urls[key]:
-                if key in self.memo:
-                    urls[key] = self.memo[key]
-
-        self.memo.update(urls)
-
+    def save_urls(self):
         with open(self.file_name, 'w') as file:
             json.dump(self.memo, file, indent=4, sort_keys=True)
+
+    def upd_urls(self, urls):
+        def merge(source, destination):
+            for key, value in source.items():
+                if isinstance(value, dict):
+                    # get node or create one
+                    node = destination.setdefault(key, {})
+                    merge(value, node)
+                else:
+                    destination[key] = value
+
+            return destination
+        self.memo = merge(urls, self.memo)
+        self.save_urls()
+
+    def remove_urls(self, urls):
+        for url in urls:
+            del self.memo[url]
+        
+        self.save_urls()
+
+    def get_fields(self, field):
+        return [x[field] for x in self.memo.values()]
+
+    def size(self):
+        return len(self.memo)
+
 
 memo = Memo()
