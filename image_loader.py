@@ -3,12 +3,15 @@ from memo.url_memo import memo
 import os
 import urllib.request
 import utils
-import progressbar
+from utils import execTask
 
 
 def readURL(url):
-    with urllib.request.urlopen(url) as response:
-        return response.read()
+    try:
+        with urllib.request.urlopen(url) as response:
+            return response.read()
+    except:
+        return None
 
 
 def downloadimg(imgurl, folder):
@@ -16,8 +19,10 @@ def downloadimg(imgurl, folder):
 
     full_path = folder + '/' + imgfilename
     if not os.path.isfile(full_path):
-        with open(full_path, 'wb') as f:
-            f.write(readURL(imgurl))
+        data = readURL(imgurl)
+        if data != None:
+            with open(full_path, 'wb') as f:
+                f.write(data)
 
 
 def load():
@@ -27,14 +32,13 @@ def load():
         os.mkdir(folder)
 
     urls = memo.getURLs()
-    bar = progressbar.ProgressBar(maxval=len(urls),
-                                  widgets=['load images:', progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
 
-    bar.start()
-    for i, url in enumerate(urls):
-        downloadimg(url, folder)
-        bar.update(i + 1)
-    bar.finish()
+    def Task(progress):
+        for i, url in enumerate(urls):
+            downloadimg(url, folder)
+            progress.update(i + 1)
+
+    execTask(name='load images:', size=len(urls), task=Task)
 
 
 if __name__ == '__main__':

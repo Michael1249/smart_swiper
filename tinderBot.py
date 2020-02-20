@@ -1,11 +1,11 @@
 from selenium import webdriver
 from time import sleep
-from utils import wait_for, wait_get
+from utils import waitFor, lateGet
 import re
 from secret import username, password
 from selenium.webdriver.common.keys import Keys
 from memo.url_memo import memo
-from common import defaultUrlData
+from common import DEFAULT_URL_DATA
 
 class TinderBot():
     def __init__(self):
@@ -14,13 +14,13 @@ class TinderBot():
     def login(self):
         self.driver.get('https://tinder.com')
 
-        fb_btn = wait_get(lambda: self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/div[2]/button'))
+        fb_btn = lateGet(lambda: self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/div[2]/button'))
         fb_btn.click()
 
         # switch to login popup
         base_window = self.driver.window_handles[0]
 
-        wait_for(lambda: self.driver.window_handles[1])
+        waitFor(lambda: self.driver.window_handles[1])
 
         self.driver.switch_to_window(self.driver.window_handles[1])
 
@@ -35,13 +35,13 @@ class TinderBot():
 
         self.driver.switch_to_window(base_window)
 
-        popup_1 = wait_get(lambda: self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/button[1]/span'))
+        popup_1 = lateGet(lambda: self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/button[1]/span'))
         popup_1.click()
 
-        popup_2 = wait_get(lambda: self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/button[2]'))
+        popup_2 = lateGet(lambda: self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/button[2]'))
         popup_2.click()
 
-        wait_for(lambda: self.driver.find_element_by_xpath(
+        waitFor(lambda: self.driver.find_element_by_xpath(
             '//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[1]/div[3]/div[1]/div[1]/div/div[1]'))
 
         sleep(4)
@@ -49,7 +49,7 @@ class TinderBot():
     def like(self):
         def _like():
             for url in self.getCurrentFaceURLs():
-                memo.upd_urls({url: defaultUrlData)
+                memo.upd_urls({url: DEFAULT_URL_DATA})
 
             like_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[3]')
             like_btn.click()
