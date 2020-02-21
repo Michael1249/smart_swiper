@@ -10,6 +10,6 @@ def getModel():
     model.add(Dense(1))
 
     sgd = SGD(lr=0.1)
-    model.compile(loss='mse', optimizer=sgd, metrics=['mse'])
+    model.compile(loss='mse', optimizer=sgd, metrics=['mse', 'accuracy'])
 
     return model

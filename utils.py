@@ -1,6 +1,7 @@
 from time import sleep
 import datetime
 import progressbar
+import math
 
 
 def waitFor(condition):
@@ -40,3 +41,17 @@ def execTask(name, task, size = 100):
     result = task(progress)
     progress.finish()
     return result
+
+def getMid(x):
+        return sum(x) / len(x)
+
+def getDev(x):
+    mid = getMid(x)
+    return math.sqrt(1 / (len(x) - 1) * sum([(xi - mid) ** 2 for xi in x]))
+
+def getCorrelation(a, b):
+    mid_a = getMid(a)
+    mid_b = getMid(b)
+    dev_a = getDev(a)
+    dev_b = getDev(b)
+    return (1 / (len(a) - 1)) * sum([(x - mid_a) / dev_a * (y - mid_b) / dev_b for x, y in zip(a, b)])

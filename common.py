@@ -1,5 +1,5 @@
 import enum
-
+import os
 
 class Mark(enum.Enum):
     undefined = -1
@@ -12,3 +12,5 @@ DEFAULT_URL_DATA = {
     "prediction": Mark.undefined.name,
     'encoding': []
 }
+
+ROOT_PATH = os.path.dirname(os.path.abspath(__file__))

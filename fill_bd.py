@@ -3,6 +3,7 @@ import sys
 import types
 import json
 from memo.url_memo import memo
+from common import Mark
 
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets, uic
 
@@ -10,7 +11,7 @@ from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets, uic
 class Controller:
     def __init__(self, window):
         self.window = window
-        self.urls = memo.getURLs()
+        self.urls = [x for x in memo.getURLs() if memo.getUrlData(x)['mark'] != memo.getUrlData(x)['prediction']]
         self.position = 0
         self.loadImage()
 
@@ -63,8 +64,16 @@ class Controller:
         self.showStatus()
 
     def showStatus(self):
-        self.window.status.setText(json.dumps(memo.getUrlData(
-            self.getCurrentUrl()), indent=4, sort_keys=True))
+        data = self.getCurrentData()
+        self.window.status.setText(json.dumps(data, indent=4, sort_keys=True))
+        
+        color = {
+            Mark.undefined.name: 'background: grey',
+            Mark.dislike.name: 'background: #ff557f',
+            Mark.like.name: 'background: #00b800'
+        }
+        self.window.mark.setStyleSheet(color[data['mark']])
+        self.window.prediction.setStyleSheet(color[data['prediction']])
 
     def inc(self):
         self.position += 1
