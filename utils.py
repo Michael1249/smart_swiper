@@ -15,12 +15,16 @@ def waitFor(condition):
         sleep(1)
 
 
-def lateGet(getter):
+def lateGet(getter, num = -1):
     while True:
+        if num == 0:
+            return None
         try:
             return getter()
         except:
             sleep(1)
+            if num > 0:
+                num -= 1
 
 
 def convertUrlToName(imgurl):

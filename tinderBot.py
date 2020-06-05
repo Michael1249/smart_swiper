@@ -6,6 +6,8 @@ from secret import username, password
 from selenium.webdriver.common.keys import Keys
 from memo.url_memo import memo
 from common import DEFAULT_URL_DATA
+from image_loader import downloadimg
+import random
 
 class TinderBot():
     def __init__(self):
@@ -14,7 +16,12 @@ class TinderBot():
     def login(self):
         self.driver.get('https://tinder.com')
 
-        fb_btn = lateGet(lambda: self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/div[2]/button'))
+        # fb_btn = lateGet(lambda: self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/span/button'), 5)
+        # if fb_btn != None:
+        #     print("sdtsts")
+        #     sleep(10)
+        #     fb_btn.click()
+        fb_btn = lateGet(lambda: self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div/div/div[3]/span/div[2]/button'))
         fb_btn.click()
 
         # switch to login popup
@@ -48,11 +55,16 @@ class TinderBot():
 
     def like(self):
         def _like():
-            for url in self.getCurrentFaceURLs():
+            urls = self.getCurrentFaceURLs()
+            for url in urls:
                 memo.upd_urls({url: DEFAULT_URL_DATA})
 
-            like_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/button[3]')
-            like_btn.click()
+            like_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button')
+            dislike_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[2]/button')
+            if random.random() > 0.5:
+                like_btn.click()
+            else:
+                dislike_btn.click()
 
         try:
             _like()
