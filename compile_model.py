@@ -54,7 +54,7 @@ def calculateModelMetrics(y_pred, y_true):
 
 
 def compileModel(epochs=5000, seve_name = 'model'):
-    (X, Y, _) = getDataSet()
+    (X, Y, urls) = getDataSet()
     model = getModel()
     trainModel(model, X, Y, epochs)
     y_pred = [x[0] for x in model.predict(X)]
@@ -64,6 +64,10 @@ def compileModel(epochs=5000, seve_name = 'model'):
     realTolerance = getMid(Y)
     binTolerance = getMid([int(x > 0.5) for x in y_pred])
     modelTolerance = getMid(y_pred)
+
+    new_data = [{'prediction': (Mark.like.name if x > modelTolerance else Mark.dislike.name)}
+                for x in y_pred]
+    memo.upd_urls(dict(zip(urls, new_data)))
 
     metrics = {
         'real tolerance': realTolerance,

@@ -11,7 +11,9 @@ from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets, uic
 class Controller:
     def __init__(self, window):
         self.window = window
-        self.urls = [x for x in memo.getURLs() if memo.getUrlData(x)['mark'] != memo.getUrlData(x)['prediction']]
+        memo.remove_urls([url for url in memo.getURLs() if memo.getUrlData(url)['mark'] == Mark.undefined.name])
+            
+        self.urls = memo.getURLs()
         self.position = 0
         self.loadImage()
 

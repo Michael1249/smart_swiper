@@ -14,7 +14,7 @@ def readURL(url):
         return None
 
 
-def downloadimg(imgurl, folder):
+def downloadimg(imgurl, folder = os.path.dirname(os.path.abspath(__file__)) + '/images'):
     imgfilename = utils.convertUrlToName(imgurl)
 
     full_path = folder + '/' + imgfilename

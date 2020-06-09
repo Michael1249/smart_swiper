@@ -1,6 +1,6 @@
 from selenium import webdriver
 from time import sleep
-from utils import waitFor, lateGet
+from utils import waitFor, lateGet, convertUrlToName
 import re
 from secret import username, password
 from selenium.webdriver.common.keys import Keys
@@ -8,10 +8,15 @@ from memo.url_memo import memo
 from common import DEFAULT_URL_DATA
 from image_loader import downloadimg
 import random
+import keras
+import os
+import face_recognition
+import numpy as np
 
 class TinderBot():
     def __init__(self):
         self.driver = webdriver.Chrome()
+        self.model = keras.models.load_model(os.path.dirname(os.path.abspath(__file__)) + '/models/model.h5')
 
     def login(self):
         self.driver.get('https://tinder.com')
@@ -53,15 +58,36 @@ class TinderBot():
 
         sleep(4)
 
+    def decide(self, urls):
+        X = []
+
+        for url in urls:
+            downloadimg(url)
+            img_path = 'images/' + convertUrlToName(url)
+            img = face_recognition.load_image_file(img_path)
+            locations = face_recognition.face_locations(img)
+
+
+            if len(locations) == 1:
+                X += [list(face_recognition.face_encodings(
+                    img, known_face_locations=locations, num_jitters=5)[0])]
+
+        if X == []:
+            return False
+
+        y_pred = [x[0] for x in self.model.predict(np.array(X))]
+        mark = max(y_pred)
+
+        print('Mark: ', mark)
+        return mark > 0.2
+
     def like(self):
         def _like():
             urls = self.getCurrentFaceURLs()
-            for url in urls:
-                memo.upd_urls({url: DEFAULT_URL_DATA})
 
             like_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[4]/button')
             dislike_btn = self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div/div[2]/div[2]/button')
-            if random.random() > 0.5:
+            if self.decide(urls):
                 like_btn.click()
             else:
                 dislike_btn.click()
@@ -115,6 +141,6 @@ class TinderBot():
             try:
                 res += [getUrl(indx)]
                 indx += 1
-                sleep(0.2)
+                sleep(0.4)
             except:
                 return res
